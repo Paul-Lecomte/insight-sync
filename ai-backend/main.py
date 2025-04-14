@@ -1,13 +1,13 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
+import os
 
 app = FastAPI()
 
-
 @app.post("/transcribe/")
 async def transcribe_audio(file: UploadFile = File(...)):
-    # For now, just mock the transcription result.
-    # Later, we can integrate with Whisper or OpenAI.
+    # Ensure the 'temp' directory exists
+    os.makedirs("temp", exist_ok=True)
 
     file_location = f"temp/{file.filename}"
 
