@@ -1,22 +1,29 @@
+import os
+import openai
+from dotenv import load_dotenv
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
-import os
+
+# Load .env file
+load_dotenv()
 
 app = FastAPI()
 
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 @app.post("/transcribe/")
 async def transcribe_audio(file: UploadFile = File(...)):
-    # Ensure the 'temp' directory exists
-    os.makedirs("temp", exist_ok=True)
-
     file_location = f"temp/{file.filename}"
 
-    # Save the uploaded file temporarily (for now)
     with open(file_location, "wb") as f:
         f.write(await file.read())
 
-    # Mock transcription result
-    transcription = "This is a mock transcription of the audio file."
+    with open(file_location, "rb") as audio_file:
+        transcript = openai.Audio.transcribe(
+            model="whisper-1",
+            file=audio_file
+        )
 
-    # Return a dummy response
-    return JSONResponse(content={"transcription": transcription})
+    os.remove(file_location)
+
+    return JSONResponse(content={"transcription": transcript["text"]})
