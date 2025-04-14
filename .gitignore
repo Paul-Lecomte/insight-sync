@@ -2,4 +2,4 @@
 .git
 
 ai-backend/__pycache__/
-.env
+ai-backend/.env
