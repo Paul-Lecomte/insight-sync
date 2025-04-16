@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 
 const AudioRecorder: React.FC = () => {
     const [isRecording, setIsRecording] = useState(false);
-    const [transcription, setTranscription] = useState("");
+    const [transcription, setTranscription] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -42,7 +42,7 @@ const AudioRecorder: React.FC = () => {
             } catch (error) {
                 console.error("Transcription error:", error);
                 setError("Error during transcription.");
-                setTranscription(""); // Clear transcription on error
+                setTranscription(null); // Clear transcription on error
             } finally {
                 setLoading(false);
             }
