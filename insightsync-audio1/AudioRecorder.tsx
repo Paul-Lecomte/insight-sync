@@ -15,6 +15,13 @@ const AudioRecorder: React.FC = () => {
         setIsRecording(true);
     };
 
+    mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+            audioChunksRef.current.push(event.data);
+        }
+    };
+
+
     return <div>Audio Recorder</div>;
 };
 
