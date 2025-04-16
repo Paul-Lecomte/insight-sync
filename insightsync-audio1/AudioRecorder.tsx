@@ -17,6 +17,12 @@ const AudioRecorder: React.FC = () => {
         mediaRecorder.start();
         setIsRecording(true);
     };
+    const response = await fetch("http://localhost:8000/transcribe/", {
+        method: "POST",
+        body: formData,
+    });
+    const data = await response.json();
+
 
     mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
