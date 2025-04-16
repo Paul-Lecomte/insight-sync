@@ -29,6 +29,10 @@ const AudioRecorder: React.FC = () => {
                     body: formData,
                 });
 
+                if (!response.ok) {
+                    throw new Error("Failed to fetch transcription");
+                }
+
                 const data = await response.json();
                 setTranscription(data.transcription || "No transcription returned.");
             } catch (error) {
