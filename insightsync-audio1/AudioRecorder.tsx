@@ -61,7 +61,7 @@ const AudioRecorder: React.FC = () => {
             {transcription && (
                 <div className="mt-4 p-3 bg-white border rounded shadow">
                     <h3 className="font-semibold">Transcription:</h3>
-                    <p>{transcription}</p>
+                    <p className="text-sm text-gray-700">{transcription}</p>
                 </div>
             )}
         </div>
