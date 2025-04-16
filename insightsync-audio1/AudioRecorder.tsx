@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 const AudioRecorder: React.FC = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [transcription, setTranscription] = useState("");
+    const [loading, setLoading] = useState(false);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
 
@@ -23,6 +24,7 @@ const AudioRecorder: React.FC = () => {
             const formData = new FormData();
             formData.append("file", audioBlob, "recording.webm");
 
+            setLoading(true);
             try {
                 const response = await fetch("http://localhost:8000/transcribe/", {
                     method: "POST",
@@ -38,6 +40,8 @@ const AudioRecorder: React.FC = () => {
             } catch (error) {
                 console.error("Transcription error:", error);
                 setTranscription("Error during transcription.");
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -62,7 +66,13 @@ const AudioRecorder: React.FC = () => {
                 {isRecording ? "Stop Recording" : "Start Recording"}
             </button>
 
-            {transcription && (
+            {loading && (
+                <div className="mt-4 p-3 bg-yellow-200 text-yellow-800 rounded">
+                    Transcribing...
+                </div>
+            )}
+
+            {transcription && !loading && (
                 <div className="mt-4 p-3 bg-white border rounded shadow">
                     <h3 className="font-semibold">Transcription:</h3>
                     <p className="text-sm text-gray-700">{transcription}</p>
