@@ -27,7 +27,7 @@ Build a minimal prototype where:
 | Layer          | Tech                        | Reason                                           |
 |----------------|-----------------------------|--------------------------------------------------|
 | Frontend       | React + TypeScript          | Strong ecosystem & developer experience (DX)     |
-| Client Audio   | Rust + WebAssembly          | Fast audio processing with offline capabilities  |
+| Client Audio   | Typescript + Web Audio API  | Fast audio processing with offline capabilities  |
 | AI / Backend   | Python (FastAPI) or Node.js | Seamless integration with Whisper & LLMs         |
 | Auth + Sync    | Google API / Notion API     | For syncing meetings and managing user data      |
 | App Wrapper    | Tauri                       | Rust-based, lightweight desktop app wrapper      |
