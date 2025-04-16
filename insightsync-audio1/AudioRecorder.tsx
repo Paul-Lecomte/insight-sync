@@ -4,6 +4,7 @@ const AudioRecorder: React.FC = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [transcription, setTranscription] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
 
@@ -37,9 +38,11 @@ const AudioRecorder: React.FC = () => {
 
                 const data = await response.json();
                 setTranscription(data.transcription || "No transcription returned.");
+                setError(null); // Reset error state on success
             } catch (error) {
                 console.error("Transcription error:", error);
-                setTranscription("Error during transcription.");
+                setError("Error during transcription.");
+                setTranscription(""); // Clear transcription on error
             } finally {
                 setLoading(false);
             }
@@ -69,6 +72,12 @@ const AudioRecorder: React.FC = () => {
             {loading && (
                 <div className="mt-4 p-3 bg-yellow-200 text-yellow-800 rounded">
                     Transcribing...
+                </div>
+            )}
+
+            {error && !loading && (
+                <div className="mt-4 p-3 bg-red-200 text-red-800 rounded">
+                    {error}
                 </div>
             )}
 
