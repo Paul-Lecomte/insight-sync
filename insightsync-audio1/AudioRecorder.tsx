@@ -18,6 +18,10 @@ const AudioRecorder: React.FC = () => {
             }
         };
 
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        };
+
         mediaRecorder.start();
         setIsRecording(true);
     };
