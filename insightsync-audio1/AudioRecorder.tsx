@@ -5,6 +5,9 @@ const AudioRecorder: React.FC = () => {
     const [transcription, setTranscription] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [startSound, setStartSound] = useState("/path/to/default/start-sound.mp3");
+    const [stopSound, setStopSound] = useState("/path/to/default/stop-sound.mp3");
+
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
 
@@ -50,15 +53,15 @@ const AudioRecorder: React.FC = () => {
 
         mediaRecorder.start();
         setIsRecording(true);
-        const startAudio = new Audio("/path/to/your/start-recording-sound.mp3");
-        startAudio.play(); // Play audio feedback on start
+        const startAudio = new Audio(startSound);
+        startAudio.play(); // Play the configured start sound
     };
 
     const stopRecording = () => {
         mediaRecorderRef.current?.stop();
         setIsRecording(false);
-        const stopAudio = new Audio("/path/to/your/stop-recording-sound.mp3");
-        stopAudio.play(); // Play audio feedback on stop
+        const stopAudio = new Audio(stopSound);
+        stopAudio.play(); // Play the configured stop sound
     };
 
     return (
