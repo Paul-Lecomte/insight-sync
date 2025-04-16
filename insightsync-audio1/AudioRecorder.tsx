@@ -29,6 +29,7 @@ const AudioRecorder: React.FC = () => {
             audioChunksRef.current.push(event.data);
         }
     };
+    setTranscription(data.transcription || "No transcription returned.");
 
 
     return <div>Audio Recorder</div>;
