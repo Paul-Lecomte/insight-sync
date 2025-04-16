@@ -50,11 +50,15 @@ const AudioRecorder: React.FC = () => {
 
         mediaRecorder.start();
         setIsRecording(true);
+        const startAudio = new Audio("/path/to/your/start-recording-sound.mp3");
+        startAudio.play(); // Play audio feedback on start
     };
 
     const stopRecording = () => {
         mediaRecorderRef.current?.stop();
         setIsRecording(false);
+        const stopAudio = new Audio("/path/to/your/stop-recording-sound.mp3");
+        stopAudio.play(); // Play audio feedback on stop
     };
 
     return (
