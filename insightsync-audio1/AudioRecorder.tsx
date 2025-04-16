@@ -41,6 +41,11 @@ const AudioRecorder: React.FC = () => {
         setIsRecording(true);
     };
 
+    const stopRecording = () => {
+        mediaRecorderRef.current?.stop();
+        setIsRecording(false);
+    };
+
     return <div>Audio Recorder</div>;
 };
 
