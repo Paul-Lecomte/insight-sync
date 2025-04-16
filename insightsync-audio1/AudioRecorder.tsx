@@ -46,7 +46,26 @@ const AudioRecorder: React.FC = () => {
         setIsRecording(false);
     };
 
-    return <div>Audio Recorder</div>;
+    return (
+        <div className="p-4 bg-gray-100 rounded shadow-md max-w-md mx-auto">
+            <h2 className="text-xl font-bold mb-4">Audio Recorder</h2>
+            <button
+                onClick={isRecording ? stopRecording : startRecording}
+                className={`px-4 py-2 rounded ${
+                    isRecording ? "bg-red-500" : "bg-green-500"
+                } text-white`}
+            >
+                {isRecording ? "Stop Recording" : "Start Recording"}
+            </button>
+
+            {transcription && (
+                <div className="mt-4 p-3 bg-white border rounded shadow">
+                    <h3 className="font-semibold">Transcription:</h3>
+                    <p>{transcription}</p>
+                </div>
+            )}
+        </div>
+    );
 };
 
 export default AudioRecorder;
