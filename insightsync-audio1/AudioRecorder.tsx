@@ -22,6 +22,19 @@ const AudioRecorder: React.FC = () => {
             const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
             const formData = new FormData();
             formData.append("file", audioBlob, "recording.webm");
+
+            try {
+                const response = await fetch("http://localhost:8000/transcribe/", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+                setTranscription(data.transcription || "No transcription returned.");
+            } catch (error) {
+                console.error("Transcription error:", error);
+                setTranscription("Error during transcription.");
+            }
         };
 
         mediaRecorder.start();
