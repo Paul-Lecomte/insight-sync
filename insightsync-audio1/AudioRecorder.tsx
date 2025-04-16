@@ -5,6 +5,9 @@ const AudioRecorder: React.FC = () => {
     const [transcription, setTranscription] = useState("");
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
+    const formData = new FormData();
+    formData.append("file", audioBlob, "recording.webm");
+
 
     const startRecording = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
